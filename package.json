@@ -1,0 +1,33 @@
+{
+  "name": "ethernaut",
+  "version": "1.0.0",
+  "description": "",
+  "main": "helpers.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.3.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.17.0",
+    "babel-register": "^6.23.0",
+    "i": "^0.3.6",
+    "npm": "^6.14.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kkeaveney/Ethernauts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kkeaveney/Ethernauts/issues"
+  },
+  "homepage": "https://github.com/kkeaveney/Ethernauts#readme"
+}

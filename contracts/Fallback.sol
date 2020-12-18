@@ -1,31 +1,40 @@
-pragma solidity ^0.5.11;
+pragma solidity ^0.6.0;
+
+import "@openzeppelin/contracts/math/SafeMath.sol";
 
 contract Fallback {
+    using SafeMath for uint256;
+    mapping(address => uint256) public contributions;
     address payable public owner;
-    event Log(uint256 gas);
 
     constructor() public {
         owner = msg.sender;
+        contributions[msg.sender] = 1000 * (1 ether);
     }
 
-    function() external payable {
-        // send & transfer forwards 2300 gas to this fallback function
-        // call forwards all the gas
-        emit Log(gasleft());
+    modifier onlyOwner {
+        require(msg.sender == owner, "caller is not the owner");
+        _;
     }
 
-    function getBalance() public view returns (uint256) {
-        return address(this).balance;
-    }
-}
-
-contract SendToFallback {
-    function transferToFallback(address payable _to) public payable {
-        _to.transfer(msg.value);
+    function contribute() public payable {
+        require(msg.value < 0.001 ether);
+        contributions[msg.sender] += msg.value;
+        if (contributions[msg.sender] > contributions[owner]) {
+            owner = msg.sender;
+        }
     }
 
-    function callFallback(address payable _to) public payable {
-        (bool sent, ) = _to.call.value(msg.value)("");
-        require(sent, "Failed to send ether");
+    function getContribution() public view returns (uint256) {
+        return contributions[msg.sender];
+    }
+
+    function withdraw() public onlyOwner {
+        owner.transfer(address(this).balance);
+    }
+
+    fallback() external payable {
+        require(msg.value > 0 && contributions[msg.sender] > 0);
+        owner = msg.sender;
     }
 }

@@ -1,20 +1,23 @@
+import { ether, EVM_REVERT } from '../helpers'
 const Fallback = artifacts.require("Fallback")
 
-contract("Fallback", async ([owner, acc1]) => {
+contract("Fallback", ([owner, acc1]) => {
+    let fallback
     
-
     describe('Ownership', async () => {
         beforeEach(async () => {
-            this.fallback = await Fallback.deployed()
+            fallback = await Fallback.deployed()
             
         })
         it('confirms contract owner', async () => {
-            assert.equal(await this.fallback.owner().valueOf(), owner)      
+            assert.equal(await fallback.owner().valueOf(), owner)      
         })
         it('confirms contract contribution', async () => {
-            let balance = await this.fallback.getContribution()
-            let balance2 = await this.fallback.getContribution({from: acc1});         
+            let balance = await fallback.getContribution()
+            assert.equal(balance.toString(), ether(10).toString())
             
+            balance = await fallback.getContribution({from: acc1});         
+            assert.equal(balance.toString(), '0')
         })
     })
     

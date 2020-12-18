@@ -7,9 +7,9 @@ contract Fallback {
     mapping(address => uint256) public contributions;
     address payable public owner;
 
-    constructor() public {
+    constructor(uint256 contribution) public {
         owner = msg.sender;
-        contributions[msg.sender] = 1000 * (1 ether);
+        contributions[msg.sender] = contribution * (1 ether);
     }
 
     modifier onlyOwner {

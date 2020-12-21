@@ -1,4 +1,4 @@
-pragma solidity ^0.6.0;
+pragma solidity ^0.6.6;
 
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
@@ -7,7 +7,7 @@ contract Fallback {
     mapping(address => uint256) public contributions;
     address payable public owner;
 
-    constructor(uint256 contribution) public {
+    constructor(uint256 contribution) public payable {
         owner = msg.sender;
         contributions[msg.sender] = contribution * (1 ether);
     }
@@ -29,11 +29,15 @@ contract Fallback {
         return contributions[msg.sender];
     }
 
-    function withdraw() public onlyOwner {
-        owner.transfer(address(this).balance);
+    function withdraw() public payable onlyOwner {
+        owner.transfer((address(this)).balance);
     }
 
-    fallback() external payable {
+    function getBalance() public view returns (uint256) {
+        return (address(this)).balance;
+    }
+
+    receive() external payable {
         require(msg.value > 0 && contributions[msg.sender] > 0);
         owner = msg.sender;
     }

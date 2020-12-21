@@ -1,4 +1,3 @@
-const { expect } = require('chai')
 import { toEther, toWei, EVM_REVERT } from '../helpers'
 const Fallback = artifacts.require("Fallback")
 
@@ -52,7 +51,7 @@ contract("Fallback", ([owner, hacker]) => {
             let newHackerBalance = await web3.eth.getBalance(hacker)
             let contractBalance = await fallback.getBalance()
             assert.equal(contractBalance.valueOf(), 0)
-            assert.notEqual(contractBalance,newHackerBalance)      
+            assert.notEqual(hackerBalance,newHackerBalance)      
         })
 
     })

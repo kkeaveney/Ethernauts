@@ -124,7 +124,7 @@
         "id": 154,
         "nodeType": "ImportDirective",
         "scope": 296,
-        "sourceUnit": 636,
+        "sourceUnit": 700,
         "src": "25:51:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -150,10 +150,10 @@
               "id": 155,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 635,
+              "referencedDeclaration": 699,
               "src": "108:8:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$635",
+                "typeIdentifier": "t_contract$_SafeMath_$699",
                 "typeString": "library SafeMath"
               }
             },
@@ -1963,7 +1963,7 @@
         "id": 154,
         "nodeType": "ImportDirective",
         "scope": 296,
-        "sourceUnit": 636,
+        "sourceUnit": 700,
         "src": "25:51:1",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1989,10 +1989,10 @@
               "id": 155,
               "name": "SafeMath",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 635,
+              "referencedDeclaration": 699,
               "src": "108:8:1",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_SafeMath_$635",
+                "typeIdentifier": "t_contract$_SafeMath_$699",
                 "typeString": "library SafeMath"
               }
             },
@@ -3788,7 +3788,7 @@
     }
   },
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-12-22T10:56:23.899Z",
+  "updatedAt": "2020-12-22T21:30:34.339Z",
   "devdoc": {
     "methods": {}
   },

@@ -30,7 +30,7 @@ contract("Delegation", ([owner]) => {
             })
             // Player should own the instance now
             const newOwner = await delegate.owner.call()
-            console.log(`new instance owner:`, owner)
+            console.log(`new instance owner:`, newOwner)
             assert.equal(newOwner, owner)
             
             

@@ -8,6 +8,8 @@ const Telephone = artifacts.require("Telephone")
 const TelephoneAttack = artifacts.require("TelephoneAttack")
 const Token = artifacts.require("Token")
 const Delegate = artifacts.require("Delegate")
+const Force = artifacts.require("Force")
+const ForceAttack = artifacts.require("ForceAttack")
 
 
 const settings = {
@@ -26,6 +28,7 @@ module.exports = function(deployer) {
   deployer.deploy(TelephoneAttack)
   deployer.deploy(Token, settings.supply)
   deployer.deploy(Delegate, settings.account1)
- 
+  deployer.deploy(Force)
+  deployer.deploy(ForceAttack)
   
 };

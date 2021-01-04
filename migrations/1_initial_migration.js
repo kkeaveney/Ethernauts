@@ -7,10 +7,13 @@ const CoinFlipAttack = artifacts.require("CoinFlipAttack")
 const Telephone = artifacts.require("Telephone")
 const TelephoneAttack = artifacts.require("TelephoneAttack")
 const Token = artifacts.require("Token")
+const Delegate = artifacts.require("Delegate")
+
 
 const settings = {
   contribution: 100000000000000,
-  supply:21000000
+  supply:21000000, 
+  account1: '0xfC407CB424E6dFb4f15168b9238e5ab39f99c2Be'
 }
 
 module.exports = function(deployer) {
@@ -22,4 +25,7 @@ module.exports = function(deployer) {
   deployer.deploy(Telephone)
   deployer.deploy(TelephoneAttack)
   deployer.deploy(Token, settings.supply)
+  deployer.deploy(Delegate, settings.account1)
+ 
+  
 };
